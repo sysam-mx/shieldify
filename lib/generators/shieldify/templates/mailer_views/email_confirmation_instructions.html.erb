@@ -1,0 +1,4 @@
+<h1><%= t('shieldify.mailer.confirmation_instructions.greeting', name: @user.name) %></h1>
+<p><%= t('shieldify.mailer.confirmation_instructions.thanks') %></p>
+<p><%= link_to t('shieldify.mailer.confirmation_instructions.confirm_account'), confirmation_url(@user.confirmation_token) %></p>
+<p><%= t('shieldify.mailer.confirmation_instructions.ignore') %></p>

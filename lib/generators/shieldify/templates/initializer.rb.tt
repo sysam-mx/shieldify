@@ -1,0 +1,5 @@
+Shieldify.setup do |conf|
+  config.mailer_sender = "shieldify@example.com"
+  config.reply_to = "shieldify@example.com"
+  conf.parent_mailer = "ApplicationMailer"
+end

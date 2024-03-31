@@ -1,0 +1,77 @@
+# frozen_string_literal: true
+
+module Shieldify
+  module Models
+    module EmailAuthenticatable
+      module Registerable
+        extend ActiveSupport::Concern
+
+        included do
+          before_validation :normalize_email
+
+          # Email validations
+          validates :email, presence: true, if: -> { password.present? && new_record? }
+          validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, if: -> { email.present? }
+          validates :email, uniqueness: true, if: -> { password.present? }
+
+          # Password extra validations
+          validates :password, presence: true, if: -> { email.present? && new_record? }
+          validate :password_complexity, if: -> { password.present? }
+          validates :password, length: { minimum: 8 }, if: -> { password.present? }
+        end
+
+        class_methods do
+          # Método de clase para registrar un nuevo usuario
+          def register(email:, password:, password_confirmation:)
+            user = new(email: email, password: password, password_confirmation: password_confirmation)
+            user.save
+            user
+          end
+        end
+
+        def update_password(current_password:, new_password:, password_confirmation:)
+          if authenticate(current_password)
+            update(password: new_password, password_confirmation: password_confirmation)
+          else
+            errors.add(:password, "is invalid")
+          end
+        
+          self
+        end
+
+        def update_email(current_password:, new_email:)
+          if authenticate(current_password)
+            update(email: new_email)
+          else
+            errors.add(:password, "is invalid")
+          end
+        
+          self
+        end
+
+        private
+
+        def normalize_email
+          self.email = email.downcase.strip if email.present?
+        end
+
+        def password_complexity
+          return if password.blank?
+      
+          # Ajuste de la expresión regular para requerir al menos un carácter especial
+          # La nueva expresión regular explicada:
+          # - (?=.*\d) asegura que haya al menos un dígito
+          # - (?=.*[a-z]) asegura que haya al menos una letra minúscula
+          # - (?=.*[A-Z]) asegura que haya al menos una letra mayúscula
+          # - (?=.*[@$!%*?&]) asegura que haya al menos uno de estos caracteres especiales
+          # - \S{8,} asegura que la contraseña tenga al menos 8 caracteres de longitud y no contenga espacios
+          regex = /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])\S{8,}\z/
+      
+          unless password.match(regex)
+            errors.add :password, 'debe incluir al menos una letra mayúscula, una letra minúscula, un número, un carácter especial (@$!%*?&) y tener al menos 8 caracteres de longitud.'
+          end
+        end
+      end
+    end
+  end
+end

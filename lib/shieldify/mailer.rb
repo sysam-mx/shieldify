@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+module Shieldify
+  class Mailer < ActionMailer::Base # Shieldify::Configuration.parent_mailer.constantize
+    layout 'mailer'
+
+    default(
+      from: Shieldify::Configuration.mailer_sender,
+      reply_to: Shieldify::Configuration.reply_to
+    )
+
+    def base_mailer
+      initialize_email_resources(params)
+      attach_images
+      attach_files
+
+      mail(define_headers)
+    end
+
+    private
+
+      def define_headers
+        headers = {
+          to: user.email,
+          subject: define_subject,
+          template_path: "shieldify/mailer",
+          template_name: action
+        }
+
+        headers.store(:reply_to, reply_to) if instance_variable_defined?(:@reply_to)
+        headers.store(:from, from) if instance_variable_defined?(:@from)
+        headers
+      end
+
+      def initialize_email_resources(options)
+        options.each do |key, value|
+          self.class.send(:attr_accessor, key)
+          instance_variable_set("@#{key}", value)
+        end
+      end
+
+      def attach_images
+        if instance_variable_defined?(:@images)
+          images.each{ |key, value| attachments.inline[key] = File.read(value) }
+        end
+      end
+
+      def attach_files
+        if instance_variable_defined?(:@files)
+          files.each{ |key, value| attachments.inline[key] = File.read(value) }
+        end
+      end
+
+      def define_subject
+        I18n.t("shieldify.mailer.#{action}.subject")
+      end
+  end
+end

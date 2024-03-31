@@ -1,0 +1,37 @@
+es:
+  shieldify:
+    mailer:
+      email_confirmation_instructions:
+        subject: "Instrucciones de Confirmación de Cuenta"
+        title: "Instrucciones de Confirmación de Cuenta"
+        greeting: "Hola %{name},"
+        thanks: "Gracias por registrarte. Por favor confirma tu cuenta haciendo clic en el siguiente enlace:"
+        confirm_account: "Confirmar cuenta"
+        ignore: "Si no has solicitado esta confirmación, por favor ignora este correo."
+      reset_password_instructions:
+        subject: "Instrucciones para Restablecer Contraseña"
+        title: "Instrucciones para Restablecer Contraseña"
+        greeting: "Hola %{name},"
+        instructions: "Alguien ha solicitado un enlace para cambiar tu contraseña. Puedes hacerlo a través del enlace de abajo:"
+        change_password: "Cambiar mi contraseña"
+        ignore: "Si no solicitaste esto, por favor ignora este correo. Tu contraseña no cambiará."
+        link_expiration: "Este enlace expirará en %{expiration_hours} horas."
+      unlock_instructions:
+        subject: "Instrucciones para Desbloquear Cuenta"
+        title: "Instrucciones para Desbloquear Cuenta"
+        greeting: "Hola %{name},"
+        instructions: "Tu cuenta ha sido bloqueada debido a un número excesivo de intentos de inicio de sesión fallidos. Por favor, desbloquea tu cuenta haciendo clic en el siguiente enlace:"
+        unlock_account: "Desbloquear Cuenta"
+        ignore: "Si no has solicitado esto, por favor ignora este correo. Tu cuenta permanecerá segura."
+      email_changed:
+        subject: "Correo Electrónico Actualizado"
+        title: "Correo Electrónico Actualizado"
+        greeting: "Hola %{name},"
+        message: "Estamos enviándote este correo para notificarte que tu dirección de correo electrónico ha sido actualizada exitosamente."
+        ignore: "Si no hiciste este cambio, por favor contacta a soporte inmediatamente."
+      password_changed:
+        subject: "Contraseña Actualizada"
+        title: "Contraseña Actualizada"
+        greeting: "Hola %{name},"
+        message: "Esta es una notificación de que tu contraseña ha sido cambiada exitosamente."
+        advice: "Si no realizaste este cambio, por favor contacta a nuestro equipo de soporte inmediatamente."

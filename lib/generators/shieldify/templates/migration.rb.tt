@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+class ShieldifyCreate<%= table_name.camelize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :<%= table_name %> do |t|
+      ## Database authenticatable
+      t.string :email, null: false, default: ""
+      t.string :password_digest, null: false, default: ""
+      t.timestamps null: false
+    end
+
+    add_index :<%= table_name %>, :email, unique: true
+  end
+end
