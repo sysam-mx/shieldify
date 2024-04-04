@@ -108,10 +108,8 @@ module Shieldify
             user
           end
 
-          private
-
           def add_error_to_empty_user(param, error)
-            user = User.new
+            user = new
 
             user.errors.add(
               param.to_sym,
