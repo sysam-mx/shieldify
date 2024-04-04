@@ -23,7 +23,8 @@ end
 require "minitest/autorun"
 require "minitest/spec"
 
+require "shieldify/models/email_authenticatable/confirmable"
+
 # For generators
 require "generators/shieldify/install_generator"
-require "generators/shieldify/resource_generator"
 require "shieldify/mailer"

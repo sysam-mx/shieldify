@@ -6,7 +6,7 @@ module Shieldify
       extend ActiveSupport::Concern
 
       included do
-        has_secure_password
+        has_secure_password(validations: false)
       end
     end
   end

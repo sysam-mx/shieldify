@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ShieldifyCreateUsers < ActiveRecord::Migration<%= migration_version %>
+class ShieldifyCreateUsers < ActiveRecord::Migration[7.1]
   def change
     create_table :users do |t|
       ## Email registerable

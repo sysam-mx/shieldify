@@ -16,4 +16,5 @@ end
 group :test do
   gem 'minitest-spec-rails'
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
+  gem 'faker', '~> 3.3', '>= 3.3.1'
 end

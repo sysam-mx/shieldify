@@ -11,7 +11,7 @@ module Shieldify
 
           # Email validations
           validates :email, presence: true, if: -> { password.present? && new_record? }
-          validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, if: -> { email.present? }
+          validates :email, format: { with: Shieldify::Configuration.email_regexp }, if: -> { email.present? }
           validates :email, uniqueness: true, if: -> { password.present? }
 
           # Password extra validations
@@ -21,7 +21,6 @@ module Shieldify
         end
 
         class_methods do
-          # Método de clase para registrar un nuevo usuario
           def register(email:, password:, password_confirmation:)
             user = new(email: email, password: password, password_confirmation: password_confirmation)
             user.save
@@ -32,6 +31,8 @@ module Shieldify
         def update_password(current_password:, new_password:, password_confirmation:)
           if authenticate(current_password)
             update(password: new_password, password_confirmation: password_confirmation)
+
+            send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
           else
             errors.add(:password, "is invalid")
           end
@@ -42,6 +43,8 @@ module Shieldify
         def update_email(current_password:, new_email:)
           if authenticate(current_password)
             update(email: new_email)
+
+            send_email_change_notification if Shieldify::Configuration.send_email_changed_notification 
           else
             errors.add(:password, "is invalid")
           end
@@ -57,15 +60,7 @@ module Shieldify
 
         def password_complexity
           return if password.blank?
-      
-          # Ajuste de la expresión regular para requerir al menos un carácter especial
-          # La nueva expresión regular explicada:
-          # - (?=.*\d) asegura que haya al menos un dígito
-          # - (?=.*[a-z]) asegura que haya al menos una letra minúscula
-          # - (?=.*[A-Z]) asegura que haya al menos una letra mayúscula
-          # - (?=.*[@$!%*?&]) asegura que haya al menos uno de estos caracteres especiales
-          # - \S{8,} asegura que la contraseña tenga al menos 8 caracteres de longitud y no contenga espacios
-          regex = /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])\S{8,}\z/
+          regex = Shieldify::Configuration.password_complexity
       
           unless password.match(regex)
             errors.add :password, 'debe incluir al menos una letra mayúscula, una letra minúscula, un número, un carácter especial (@$!%*?&) y tener al menos 8 caracteres de longitud.'

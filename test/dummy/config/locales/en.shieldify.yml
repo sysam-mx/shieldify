@@ -1,0 +1,48 @@
+en:
+  shieldify:
+    models:
+      email_authenticatable:
+        confirmable:
+          email_confirmation_token:
+            errors:
+              invalid: "invalid"
+              expired: "has expired"
+          unconfirmed_email:
+            errors:
+              not_found: "not found"
+          email_confirmation_token_generated_at:
+    mailer:
+      email_confirmation_instructions:
+        subject: "Email Confirmation Instructions"
+        title: "Email Confirmation Instructions"
+        greeting: "Hello %{email},"
+        thanks: "Please confirm your email by clicking on the following link:"
+        confirm_account: "Confirm email"
+        ignore: "If you did not request this confirmation, please ignore this email."
+      reset_password_instructions:
+        subject: "Password Reset Instructions"
+        title: "Password Reset Instructions"
+        greeting: "Hello %{email},"
+        instructions: "Someone has requested a link to change your password. You can do this through the link below:"
+        change_password: "Change my password"
+        ignore: "If you didn't request this, please ignore this email. Your password will not change."
+        link_expiration: "This link will expire in %{expiration_hours} hours."
+      unlock_instructions:
+        subject: "Account Unlock Instructions"
+        title: "Account Unlock Instructions"
+        greeting: "Hello %{email},"
+        instructions: "Your account has been locked due to an excessive number of failed login attempts. Please unlock your account by clicking on the following link:"
+        unlock_account: "Unlock Account"
+        ignore: "If you did not request this, please ignore this email. Your account will remain secure."
+      email_changed:
+        subject: "Email Updated"
+        title: "Email Updated"
+        greeting: "Hello %{email},"
+        message: "We're sending this email to notify you that your email address has been successfully updated."
+        ignore: "If you did not make this change, please contact support immediately."
+      password_changed:
+        subject: "Password Updated"
+        title: "Password Updated"
+        greeting: "Hello %{email},"
+        message: "This is a notification that your password has been successfully changed."
+        advice: "If you did not make this change, please contact our support team immediately."

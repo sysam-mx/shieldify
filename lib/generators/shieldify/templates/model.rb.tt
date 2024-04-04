@@ -1,2 +1,2 @@
-class <%= class_name %> < ApplicationRecord
+class User < ApplicationRecord
 end
