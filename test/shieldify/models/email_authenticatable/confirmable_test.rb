@@ -99,7 +99,7 @@ module Shieldify
             test "should return and error" do
               new_user = User.create(attributes_for(:user))
               unconfirmed_email = new_user.unconfirmed_email
-              new_user.update(email_confirmation_token_generated_at: 3.days.ago)
+              new_user.update(email_confirmation_token_generated_at: 34.hours.ago)
               user = User.confirm_email_by_token(new_user.email_confirmation_token)
 
               assert_empty new_user.email
@@ -154,6 +154,34 @@ module Shieldify
             assert_equal [user.unconfirmed_email], email.to
             assert_equal I18n.t("shieldify.mailer.email_confirmation_instructions.subject"), email.subject
           end
+        end
+
+        test "#confirm_email" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+
+        test "regenerate_and_save_email_confirmation_token" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+
+        test "send_email_confirmation_instructions" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+
+        test "email_confirmation_token_expired?" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+
+        test "pending_email_confirmation?" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+        
+        test "skip_email_confirmation_callbacks?" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
+
+        test "confirmed?" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
         end
       end
     end

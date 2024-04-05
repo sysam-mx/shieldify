@@ -10,9 +10,9 @@ module Shieldify
           before_validation :normalize_email
 
           # Email validations
-          validates :email, presence: true, if: -> { password.present? && new_record? }
+          validates :email, presence: true, if: -> { password.present? || email_changed? }
           validates :email, format: { with: Shieldify::Configuration.email_regexp }, if: -> { email.present? }
-          validates :email, uniqueness: true, if: -> { password.present? }
+          validates :email, uniqueness: true, if: -> { email.present? }
 
           # Password extra validations
           validates :password, presence: true, if: -> { email.present? && new_record? }
@@ -32,7 +32,7 @@ module Shieldify
           if authenticate(current_password)
             update(password: new_password, password_confirmation: password_confirmation)
 
-            send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
+            # send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
           else
             errors.add(:password, "is invalid")
           end
@@ -44,7 +44,7 @@ module Shieldify
           if authenticate(current_password)
             update(email: new_email)
 
-            send_email_change_notification if Shieldify::Configuration.send_email_changed_notification 
+            # send_email_change_notification if Shieldify::Configuration.send_email_changed_notification
           else
             errors.add(:password, "is invalid")
           end
@@ -63,7 +63,7 @@ module Shieldify
           regex = Shieldify::Configuration.password_complexity
       
           unless password.match(regex)
-            errors.add :password, 'debe incluir al menos una letra mayúscula, una letra minúscula, un número, un carácter especial (@$!%*?&) y tener al menos 8 caracteres de longitud.'
+            errors.add :password, 'debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)'
           end
         end
       end
