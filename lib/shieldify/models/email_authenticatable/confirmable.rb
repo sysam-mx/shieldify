@@ -38,7 +38,11 @@ module Shieldify
           self.email_confirmation_token = nil
           self.email_confirmation_token_generated_at = nil
 
-          save
+          save do |result|
+            self.skip_email_confirmation_callbacks = nil
+
+            result
+          end
         end
 
         def regenerate_and_save_email_confirmation_token

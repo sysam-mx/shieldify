@@ -152,7 +152,6 @@ module Shieldify
                 assert_equal user.email, user_attributes.fetch(:email)
                 assert_nil user.unconfirmed_email
 
-                user = User.find_by(email: user.email)
                 user_attributes = attributes_for(:user)
                 user.update(email: user_attributes.fetch(:email))
 
