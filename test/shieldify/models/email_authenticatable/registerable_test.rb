@@ -163,6 +163,26 @@ module Shieldify
             end
           end
         end
+
+        describe "#update_password" do
+          # skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+
+          describe "when invalid password" do
+            setup do
+              User = Class.new(ApplicationRecord) do
+                shieldify email_authenticatable: [:registerable]
+              end
+            end
+
+            test "should return invalid password error" do
+              skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+            end
+          end
+        end
+
+        test "update_email" do
+          skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+        end
       end
     end
   end

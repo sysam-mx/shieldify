@@ -32,7 +32,7 @@ module Shieldify
           if authenticate(current_password)
             update(password: new_password, password_confirmation: password_confirmation)
 
-            # send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
+            send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
           else
             errors.add(:password, "is invalid")
           end
@@ -44,12 +44,20 @@ module Shieldify
           if authenticate(current_password)
             update(email: new_email)
 
-            # send_email_change_notification if Shieldify::Configuration.send_email_changed_notification
+            send_email_changed_notification if Shieldify::Configuration.send_email_changed_notification
           else
             errors.add(:password, "is invalid")
           end
         
           self
+        end
+
+        def send_email_changed_notification
+          Shieldify::Mailer.with(user: self, action: :email_changed).base_mailer.deliver_now
+        end
+
+        def send_password_changed_notification
+          Shieldify::Mailer.with(user: self, action: :password_changed).base_mailer.deliver_now
         end
 
         private
