@@ -30,11 +30,11 @@ module Shieldify
 
         def update_password(current_password:, new_password:, password_confirmation:)
           if authenticate(current_password)
-            update(password: new_password, password_confirmation: password_confirmation)
-
-            send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
+            if update(password: new_password, password_confirmation: password_confirmation)
+              send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
+            end
           else
-            errors.add(:password, "is invalid")
+            errors.add(:current_password, "is invalid")
           end
         
           self
@@ -42,9 +42,9 @@ module Shieldify
 
         def update_email(current_password:, new_email:)
           if authenticate(current_password)
-            update(email: new_email)
-
-            send_email_changed_notification if Shieldify::Configuration.send_email_changed_notification
+            if update(email: new_email)
+              send_email_changed_notification if Shieldify::Configuration.send_email_changed_notification
+            end
           else
             errors.add(:password, "is invalid")
           end
@@ -69,8 +69,8 @@ module Shieldify
         def password_complexity
           return if password.blank?
           regex = Shieldify::Configuration.password_complexity
-      
-          unless password.match(regex)
+
+          unless password.match?(regex)
             errors.add :password, 'debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)'
           end
         end

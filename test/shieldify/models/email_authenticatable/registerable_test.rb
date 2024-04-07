@@ -165,8 +165,6 @@ module Shieldify
         end
 
         describe "#update_password" do
-          # skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
-
           describe "when invalid password" do
             setup do
               User = Class.new(ApplicationRecord) do
@@ -174,8 +172,71 @@ module Shieldify
               end
             end
 
-            test "should return invalid password error" do
-              skip "Pending implementation, see #{__FILE__}:#{__LINE__ + 1}"
+            test "should return invalid password error if incorrect password" do
+              user = User.create(attributes_for(:user))
+
+              assert user.persisted?
+
+              user.update_password(
+                current_password: "Incorret-password!",
+                new_password: "Asde123!",
+                password_confirmation: "Asde123!"
+              )
+
+              assert user.errors.present?
+              assert_not_empty user.errors[:current_password]
+              assert_includes user.errors[:current_password], "is invalid"
+            end
+          end
+
+          describe "when invalid password complexity" do
+            setup do
+              User = Class.new(ApplicationRecord) do
+                shieldify email_authenticatable: [:registerable]
+              end
+            end
+
+            test "should return an error" do
+              created_user_attributes = attributes_for(:user)
+              user = User.create(created_user_attributes)
+
+              assert user.persisted?
+
+              user.update_password(
+                current_password: created_user_attributes.fetch(:password),
+                new_password: "123456",
+                password_confirmation: "123456"
+              )
+
+              assert user.errors.present?
+              assert_not_empty user.errors[:password]
+              assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
+              assert_includes user.errors[:password], "debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+            end
+          end
+
+          describe "when all good" do
+            test "should update password" do
+              created_user_attributes = attributes_for(:user)
+              user = User.create(created_user_attributes)
+
+              assert user.persisted?
+
+              update_user_attributes = attributes_for(:user)
+              user.update_password(
+                current_password: created_user_attributes.fetch(:password),
+                new_password: update_user_attributes.fetch(:password),
+                password_confirmation: update_user_attributes.fetch(:password)
+              )
+
+              debugger
+
+              refute user.errors.present?
+              assert user.password, update_user_attributes.fetch(:password)
+            end
+
+            test "should send email" do
+
             end
           end
         end
