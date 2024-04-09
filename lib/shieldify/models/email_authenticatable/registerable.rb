@@ -10,7 +10,7 @@ module Shieldify
           before_validation :normalize_email
 
           # Email validations
-          validates :email, presence: true, if: -> { password.present? || email_changed? }
+          validates :email, presence: true, if: -> { password.present? && new_record? }
           validates :email, format: { with: Shieldify::Configuration.email_regexp }, if: -> { email.present? }
           validates :email, uniqueness: true, if: -> { email.present? }
 
@@ -53,11 +53,11 @@ module Shieldify
         end
 
         def send_email_changed_notification
-          Shieldify::Mailer.with(user: self, action: :email_changed).base_mailer.deliver_now
+          Shieldify::Mailer.with(user: self, email_to: email, action: :email_changed).base_mailer.deliver_now
         end
 
         def send_password_changed_notification
-          Shieldify::Mailer.with(user: self, action: :password_changed).base_mailer.deliver_now
+          Shieldify::Mailer.with(user: self, email_to: email, action: :password_changed).base_mailer.deliver_now
         end
 
         private

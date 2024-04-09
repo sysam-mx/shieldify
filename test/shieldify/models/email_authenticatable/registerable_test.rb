@@ -3,7 +3,7 @@ require 'test_helper'
 module Shieldify
   module Models
     module EmailAuthenticatable
-      class RegisterableTest < ActiveSupport::TestCase
+      class RegisterableTest < ActionMailer::TestCase
         
         describe "validations" do
           describe "when user created" do
@@ -216,7 +216,13 @@ module Shieldify
           end
 
           describe "when all good" do
-            test "should update password" do
+            setup do
+              User = Class.new(ApplicationRecord) do
+                shieldify email_authenticatable: [:registerable]
+              end
+            end
+
+            test "should update password and send password changed notification" do
               created_user_attributes = attributes_for(:user)
               user = User.create(created_user_attributes)
 
@@ -229,14 +235,17 @@ module Shieldify
                 password_confirmation: update_user_attributes.fetch(:password)
               )
 
-              debugger
-
               refute user.errors.present?
-              assert user.password, update_user_attributes.fetch(:password)
+              assert_equal user.password, update_user_attributes.fetch(:password)
+              
+              # send email confirmation instructions
+              assert_emails 1
+              email = ActionMailer::Base.deliveries.last
+              assert_equal [user.email], email.to
+              assert_equal I18n.t("shieldify.mailer.password_changed.subject"), email.subject
             end
 
             test "should send email" do
-
             end
           end
         end

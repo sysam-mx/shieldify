@@ -19,7 +19,7 @@ module Shieldify
 
     def define_headers
       headers = {
-        to: user.unconfirmed_email,
+        to: email_to,
         subject: define_subject,
         template_path: "shieldify/mailer",
         template_name: action

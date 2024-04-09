@@ -50,7 +50,7 @@ module Shieldify
         end
 
         def send_email_confirmation_instructions
-          params = { user: self, token: email_confirmation_token, action: :email_confirmation_instructions }
+          params = { user: self, email_to: unconfirmed_email, token: email_confirmation_token, action: :email_confirmation_instructions }
           Shieldify::Mailer.with(params).base_mailer.deliver_now
         end
 
