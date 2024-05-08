@@ -5,7 +5,6 @@ class JwtService
   @issuer = Shieldify::Configuration.jwt_issuer
   @jwt_exp = Shieldify::Configuration.jwt_exp
   
-
   class << self
     # Generates a new JWT token for a user using their unique identifier.
     #

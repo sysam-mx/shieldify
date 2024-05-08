@@ -32,10 +32,8 @@ class JwtServiceTest < ActiveSupport::TestCase
   end
 
   describe "#decode" do
-    # Test para la decodificación exitosa de un JWT
     test "decode returns payload for valid JWT" do
-      # Generamos un token válido para las pruebas
-      user_id = 1  # Asumimos que este es un ID válido
+      user_id = 1
       _result, token, _jti, _error  = JwtService.encode(user_id)
       
       success, payload, error = JwtService.decode(token)
@@ -46,8 +44,7 @@ class JwtServiceTest < ActiveSupport::TestCase
     end
 
     test "decode with block handles valid token" do
-      # Generamos un token válido para las pruebas
-      user_id = 1  # Asumimos que este es un ID válido
+      user_id = 1
       _result, token, _jti, _error  = JwtService.encode(user_id)
       
       JwtService.decode(token) do |success, payload, error|
@@ -57,9 +54,7 @@ class JwtServiceTest < ActiveSupport::TestCase
       end
     end
 
-    # Test para manejar la expiración del token
     test "decode handles expired tokens" do
-      # Generamos un token con tiempo de expiración en el pasado
       user_id = 1
       expired_token = JWT.encode({ sub: user_id, exp: 1.hour.ago.to_i, iss: 'Shieldify', jti: SecureRandom.hex, iat: Time.now.to_i }, JwtService.send(:secret_key), 'HS256')
 
@@ -70,14 +65,11 @@ class JwtServiceTest < ActiveSupport::TestCase
       assert_equal 'Token has expired', error, "Error should indicate that the token has expired"
     end
 
-    # Test para manejar errores de verificación (JWT::VerificationError)
     test "decode handles JWT verification errors" do
-      # Crear un token con una clave secreta incorrecta
       user_id = 1
       invalid_secret = 'wrong_secret'
       token = JWT.encode({ sub: user_id, exp: 24.hours.from_now.to_i }, invalid_secret, 'HS256')
 
-      # Decodificar el token con la clave secreta correcta debería lanzar un JWT::VerificationError
       success, payload, error = JwtService.decode(token)
       
       assert_not success, "Decoding should fail due to verification error"
@@ -85,14 +77,11 @@ class JwtServiceTest < ActiveSupport::TestCase
       assert_match /Signature verification failed/, error, "Error should indicate a verification problem"
     end
 
-    # Test para manejar errores de 'Issued At' (JWT::InvalidIatError)
     test "decode handles invalid 'Issued At' errors" do
-      # Crear un token con una fecha 'Issued At' en el futuro
       user_id = 1
       future_iat = 10.minutes.from_now.to_i
       token = JWT.encode({ sub: user_id, iat: future_iat }, JwtService.send(:secret_key), 'HS256')
 
-      # Decodificar el token debería lanzar un JWT::InvalidIatError
       success, payload, error = JwtService.decode(token)
 
       assert_not success, "Decoding should fail due to invalid 'Issued At'"
@@ -100,7 +89,6 @@ class JwtServiceTest < ActiveSupport::TestCase
       assert_match /Invalid issuer/, error, "Error should indicate an invalid 'Issued At' problem"
     end
 
-    # Test para manejar errores de formato incorrecto
     test "decode handles malformed tokens" do
       malformed_token = "not.a.real.token"
       
@@ -111,7 +99,6 @@ class JwtServiceTest < ActiveSupport::TestCase
       assert_match /Not enough or too many segments/, error, "Error should indicate a decoding problem"
     end
 
-    # Test para manejar errores de formato incorrecto
     test "decode with block handles invalid token" do
       malformed_token = "not.a.real.token"
       
