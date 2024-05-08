@@ -24,6 +24,7 @@ require "minitest/autorun"
 require "minitest/spec"
 
 require "shieldify/models/email_authenticatable/confirmable"
+require "shieldify/jwt_service"
 
 # For generators
 require "generators/shieldify/install_generator"

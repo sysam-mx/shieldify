@@ -16,9 +16,9 @@ module Shieldify
       email = Shieldify::Mailer.with(@options).base_mailer.deliver_now
 
       assert_emails 1
-      assert_equal ['shieldify@example.com'], email.from # Asume un valor predeterminado o configúralo según Shieldify::Configuration
+      assert_equal ['shieldify@example.com'], email.from
       assert_equal [@options[:user].email], email.to
-      assert_equal 'Welcome subject', email.subject # Ajusta según lo que devuelva subject_for
+      assert_equal 'Welcome subject', email.subject
     end
 
     test "base_mailer attaches images" do
@@ -34,6 +34,5 @@ module Shieldify
       assert_not email.attachments['file.pdf'].nil?
       # assert_equal email.attachments['file.pdf'].read, File.read(@options[:files]['file.pdf'])
     end
-
   end
 end

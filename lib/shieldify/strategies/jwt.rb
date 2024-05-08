@@ -9,9 +9,13 @@ module Warden
       end
 
       def authenticate!
-        user = User.find_by(id: payload['user_id'])
+        user = User.find_by(id: payload['sub'])
         if user
           success!(user)
+          
+          # Agregar el token al header de la respuesta
+          env['response_headers'] ||= {}
+          env['response_headers']['Authorization'] = "Bearer #{token}"
         else
           fail!('User not found')
         end

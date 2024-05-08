@@ -47,6 +47,16 @@ module Shieldify
     # The parent mailer for internal mailers.
     mattr_accessor :parent_mailer
     @@parent_mailer = "ActionMailer::Base"
+
+    # JWT related
+    mattr_accessor :jwt_secret
+    @@jwt_secret = "whatever"
+
+    mattr_accessor :jwt_issuer
+    @@jwt_issuer = "Shieldify"
+
+    mattr_accessor :jwt_exp
+    @@jwt_exp = 24
   end
 
   def self.setup

@@ -30,5 +30,26 @@ module Shieldify
         include "Shieldify::Models::#{parent_module.to_s.camelize}::#{submodule.to_s.camelize}".constantize
       end
     end
+
+    # included do
+    #   def self.refresh_if_needed(token)
+    #     token_info = decode(token)
+    #     return token_info unless token_info[:valid]
+    
+    #     user = User.find(token_info[:payload]['sub'])
+    #     return { error: 'User not found' } unless user
+    
+    #     if Time.at(token_info[:payload]['exp']) < 1.hour.from_now
+    #       # old_jti = token_info[:payload]['jti']
+    #       # old_jti_record = user.jwt_tokens.find_by(jti: old_jti)
+    #       # old_jti_record.destroy
+    #       new_token = encode(user)
+    
+    #       new_token
+    #     else
+    #       token
+    #     end
+    #   end
+    # end
   end
 end

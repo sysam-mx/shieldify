@@ -9,12 +9,12 @@ module Shieldify
       end
     end
 
-    initializer 'shieldify.configure_warden' do
-      Rails.application.config.middleware.use Warden::Manager do |manager|
-        manager.default_strategies :email
-        # manager.failure_app = YourFailureApp
-        manager.scope_defaults :default, store: false
-      end
-    end
+    # initializer 'shieldify.configure_warden' do
+    #   Rails.application.config.middleware.use Warden::Manager do |manager|
+    #     manager.default_strategies :email
+    #     # manager.failure_app = YourFailureApp
+    #     manager.scope_defaults :default, store: false
+    #   end
+    # end
   end
 end

@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 7.1.3"
   spec.add_dependency "orm_adapter", "~> 0.5.0"
   spec.add_dependency "bcrypt", "~> 3.1", ">= 3.1.20"
+  spec.add_dependency "warden", "~> 1.2", ">= 1.2.9"
+  spec.add_dependency "jwt", "~> 2.8", ">= 2.8.1"
 end
