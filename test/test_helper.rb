@@ -22,8 +22,10 @@ end
 # spec minitest
 require "minitest/autorun"
 require "minitest/spec"
+require "minitest/mock"
 
 require "shieldify/models/email_authenticatable/confirmable"
+require "shieldify/strategies/email.rb"
 require "shieldify/jwt_service"
 
 # For generators

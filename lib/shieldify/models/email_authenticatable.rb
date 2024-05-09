@@ -16,7 +16,9 @@ module Shieldify
           if user && user.authenticate(password)
             user
           else
-            new.errors.add(:email, "invalid email or password")
+            user = new
+            user.errors.add(:email, "invalid email or password")
+            user
           end
         end
       end

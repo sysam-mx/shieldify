@@ -15,6 +15,14 @@ class ShieldifyCreateUsers < ActiveRecord::Migration[7.1]
       t.timestamps null: false
     end
 
+    create_table :jwt_sessions do |t|
+      t.string :jti, null: false
+      t.references :user, null: false, foreign_key: true
+
+      t.timestamps
+    end
+
     add_index :users, :email, unique: true
+    add_index :jwt_sessions, :jti, unique: true
   end
 end

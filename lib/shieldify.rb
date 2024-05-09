@@ -1,6 +1,7 @@
 require "shieldify/version"
 require "shieldify/railtie"
 require "shieldify/active_record"
+require "shieldify/models/jwt_session"
 
 module Shieldify
   class Configuration
