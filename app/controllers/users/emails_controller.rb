@@ -1,5 +1,5 @@
 module Users
-  class EmailsController < ApplicationController
+  class EmailsController < ActionController::Base
     def show
       token = params[:token]
       user = User.confirm_email_by_token(token)

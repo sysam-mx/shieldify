@@ -2,7 +2,7 @@
 
 module Shieldify
   class Mailer < Shieldify::Configuration.parent_mailer.constantize
-    layout 'mailer'
+    layout 'layouts/shieldify/mailer'
 
     default(
       from: Shieldify::Configuration.mailer_sender,

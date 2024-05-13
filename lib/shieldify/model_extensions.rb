@@ -1,13 +1,6 @@
-require "shieldify/models/email_authenticatable"
-require "shieldify/models/email_authenticatable/registerable"
-
 module Shieldify
   module ModelExtensions
     extend ActiveSupport::Concern
-
-    included do
-      has_many :jwt_sessions, dependent: :destroy
-    end
 
     class_methods do
       # Incluye módulos dinámicamente. Acepta un hash donde las claves son símbolos
@@ -20,6 +13,8 @@ module Shieldify
             include_submodule(parent, submodule)
           end
         end
+
+        has_many :jwt_sessions, dependent: :destroy
       end
 
       private

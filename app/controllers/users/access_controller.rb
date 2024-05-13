@@ -1,5 +1,5 @@
 module Users
-  class AccessController < ApplicationController
+  class AccessController < ActionController::Base
     # GET /users/access/:token/unlock
     def show
       user = User.find_by(unlock_token: params[:token])

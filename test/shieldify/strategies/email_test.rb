@@ -16,6 +16,9 @@ class EmailTest < ActionDispatch::IntegrationTest
   test "successful login" do
     post '/shfy/login', params: { email: @user.email, password: @user.password }
     assert_response :success
+
+    debugger
+
     assert_equal 'Bearer token', response.headers['Authorization']
   end
 

@@ -1,6 +1,6 @@
 module Users
   module Emails
-    class ResetPasswordsController < ApplicationController
+    class ResetPasswordsController < ActionController::Base
       # POST /users/email/reset_password
       def create
         user = User.find_by(email: params[:email])

@@ -1,7 +1,12 @@
 require "shieldify/version"
 require "shieldify/railtie"
 require "shieldify/active_record"
+require "shieldify/models/email_authenticatable"
+require "shieldify/models/email_authenticatable/registerable"
+require "shieldify/models/email_authenticatable/confirmable"
 require "shieldify/models/jwt_session"
+require "shieldify/strategies/email"
+require "shieldify/auth_middleware"
 
 module Shieldify
   class Configuration
@@ -64,3 +69,5 @@ module Shieldify
     yield Configuration.instance
   end
 end
+
+require "shieldify/mailer"
