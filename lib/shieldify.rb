@@ -1,7 +1,7 @@
 require "shieldify/version"
 require "shieldify/railtie"
 require "shieldify/model_extensions"
-require "shieldify/models/jwt_session"
+# require "shieldify/models/jwt_session"
 require "shieldify/strategies/email"
 require "shieldify/middleware"
 

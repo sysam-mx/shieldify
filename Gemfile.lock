@@ -4,7 +4,6 @@ PATH
     shieldify (0.1.0)
       bcrypt (~> 3.1, >= 3.1.20)
       jwt (~> 2.8, >= 2.8.1)
-      orm_adapter (~> 0.5.0)
       rails (>= 7.1.3)
       warden (~> 1.2, >= 1.2.9)
 
@@ -143,15 +142,12 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.2-arm64-darwin)
       racc (~> 1.4)
-    orm_adapter (0.5.0)
     psych (5.1.2)
       stringio
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.9)
-    rack-cors (2.0.2)
-      rack (>= 2.0.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -217,7 +213,6 @@ DEPENDENCIES
   faker (~> 3.3, >= 3.3.1)
   minitest-spec-rails
   puma
-  rack-cors
   shieldify!
   sqlite3
 

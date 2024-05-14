@@ -11,7 +11,11 @@ module Shieldify
       end
     end
 
-    initializer 'shieldify.action_mailer' do
+    initializer 'shieldify.require' do
+      require_relative '../../app/models/jwt_session'
+    end
+
+    initializer 'shieldify.active_record' do
       ActiveSupport.on_load(:active_record) do
         include Shieldify::ModelExtensions
       end

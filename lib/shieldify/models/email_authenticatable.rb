@@ -12,14 +12,12 @@ module Shieldify
       class_methods do
         def authenticate_by_email(email:, password:)
           user = find_by(email: email)
-                                
-          if user && user.authenticate(password)
-            user
-          else
-            user = new
-            user.errors.add(:email, "invalid email or password")
-            user
-          end
+
+          return user if user&.authenticate(password)
+
+          user ||= new
+          user.errors.add(:email, "invalid email or password")
+          user
         end
       end
     end
