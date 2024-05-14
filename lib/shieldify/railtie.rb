@@ -8,14 +8,18 @@ module Shieldify
         post 'shfy/users/email/reset_password', to: 'users/emails/reset_passwords#create'
         put 'shfy/users/email/:token/reset_password', to: 'users/emails/reset_passwords#update'
         get 'shfy/users/access/:token/unlock', to: 'users/access#show'
-        
-        post '/shfy/login', to: 'sessions#create' # just for testing
       end
     end
 
     initializer 'shieldify.action_mailer' do
+      ActiveSupport.on_load(:active_record) do
+        include Shieldify::ModelExtensions
+      end
+    end
+
+    initializer 'shieldify.action_mailer' do |app|
       ActiveSupport.on_load(:action_mailer) do
-        include Rails.application.routes.url_helpers
+        include app.routes.url_helpers
       end
     end
 
@@ -32,7 +36,7 @@ module Shieldify
     end
 
     initializer 'shieldify.insert_middleware', after: :load_config_initializers do |app|
-      app.middleware.insert_after Warden::Manager, Shieldify::AuthMiddleware
+      app.middleware.insert_after Warden::Manager, Shieldify::Middleware
     end
   end
 end

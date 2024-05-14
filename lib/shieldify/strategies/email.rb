@@ -29,16 +29,16 @@ module Warden
       def process_jwt_token(user, token, jti)
         jwt_token = user.jwt_sessions.create(jti: jti)
         if jwt_token.persisted?
-          set_authorization_header(token)
+          set_jwt_to_header(token)
           success!(user)
         else
           fail!("Failed to save JWT token: #{jwt_token.errors.full_messages.join(", ")}")
         end
       end
 
-      def set_authorization_header(token)
-        env['response_headers'] ||= {}
-        env['response_headers']['Authorization'] = "Bearer #{token}"
+      def set_jwt_to_header(token)
+        env['auth.jwt'] ||= {}
+        env['auth.jwt'] = token
       end
     end
   end

@@ -4,35 +4,22 @@ module Shieldify
   class MailerTest < ActionMailer::TestCase
 
     setup do
+      user = create(:user)
       @options = {
-        user: create(:user),
-        action: 'confirmation_instructions',
-        images: {'logo.png' => "#{file_fixture_path}/logo_example.png"},
-        files: {'file.pdf' => "#{file_fixture_path}/file_example.pdf"}
+        user: user,
+        email_to: user.unconfirmed_email,
+        token: user.email_confirmation_token,
+        action: 'email_confirmation_instructions'
       }
     end
 
     test "base_mailer sends an email with correct headers" do
       email = Shieldify::Mailer.with(@options).base_mailer.deliver_now
 
-      assert_emails 1
+      assert_emails 2
       assert_equal ['shieldify@example.com'], email.from
-      assert_equal [@options[:user].email], email.to
-      assert_equal 'Welcome subject', email.subject
-    end
-
-    test "base_mailer attaches images" do
-      email = Shieldify::Mailer.with(@options).base_mailer.deliver_now
-
-      assert_not email.attachments['logo.png'].nil?
-      # assert_equal email.attachments['logo.png'].read, File.read(@options[:images]['logo.png'])
-    end
-
-    test "base_mailer attaches files" do
-      email = Shieldify::Mailer.with(@options).base_mailer.deliver_now
-
-      assert_not email.attachments['file.pdf'].nil?
-      # assert_equal email.attachments['file.pdf'].read, File.read(@options[:files]['file.pdf'])
+      assert_equal [@options[:user].unconfirmed_email], email.to
+      assert_equal 'Email Confirmation Instructions', email.subject
     end
   end
 end

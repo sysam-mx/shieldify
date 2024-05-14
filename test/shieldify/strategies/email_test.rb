@@ -15,11 +15,10 @@ class EmailTest < ActionDispatch::IntegrationTest
 
   test "successful login" do
     post '/shfy/login', params: { email: @user.email, password: @user.password }
+    
     assert_response :success
-
-    debugger
-
-    assert_equal 'Bearer token', response.headers['Authorization']
+    assert_not_nil response.headers['Authorization'], "Authorization header should not be nil"
+    assert_match /^Bearer\s.*/, response.headers['Authorization'], "Authorization header should include 'Bearer'"
   end
 
   test "unsuccessful login" do
