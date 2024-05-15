@@ -11,6 +11,22 @@ module Shieldify
       end
     end
 
+    initializer 'shieldify.configure_warden' do |app|
+      app.middleware.use Warden::Manager do |manager|
+        manager.strategies.add(:email, Warden::Strategies::Email)
+
+        manager.default_strategies :email
+        manager.scope_defaults :default, store: false
+        manager.failure_app = lambda do |env|
+          [401, { 'Content-Type' => 'application/json' }, [{ error: 'Unauthorized' }.to_json]]
+        end
+      end
+    end
+
+    initializer 'shieldify.insert_middleware', after: :load_config_initializers do |app|
+      app.middleware.insert_after Warden::Manager, Shieldify::Middleware
+    end
+
     initializer 'shieldify.require' do
       require_relative '../../app/models/jwt_session'
     end
@@ -27,20 +43,10 @@ module Shieldify
       end
     end
 
-    initializer 'shieldify.configure_warden' do |app|
-      app.middleware.use Warden::Manager do |manager|
-        manager.strategies.add(:email, Warden::Strategies::Email)
-
-        manager.default_strategies :email
-        manager.scope_defaults :default, store: false
-        manager.failure_app = lambda do |env|
-          [401, { 'Content-Type' => 'application/json' }, [{ error: 'Unauthorized' }.to_json]]
-        end
+    initializer 'shieldify.include_controller_helpers' do
+      ActiveSupport.on_load(:action_controller_api) do
+        include Shieldify::Controllers::Helpers
       end
-    end
-
-    initializer 'shieldify.insert_middleware', after: :load_config_initializers do |app|
-      app.middleware.insert_after Warden::Manager, Shieldify::Middleware
     end
   end
 end
