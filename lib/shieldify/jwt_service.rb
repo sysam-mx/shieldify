@@ -104,15 +104,7 @@ class JwtService
     def decode(token)
       decoded_token = JWT.decode(token, secret_key, true, decode_options).first
       result = [true, decoded_token, nil] # result: true (success), payload: decoded_token, errors: nil
-    rescue JWT::ExpiredSignature
-      result = [false, nil, 'Token has expired']
-    rescue JWT::InvalidIssuerError => e
-      result = [false, nil, e.message]
-    rescue JWT::DecodeError => e
-      result = [false, nil, e.message]
-    rescue JWT::VerificationError => e
-      result = [false, nil, e.message]
-    rescue JWT::InvalidIatError => e
+    rescue *jwt_exceptions => e
       result = [false, nil, e.message]
     rescue => e
       result = [false, nil, "Unexpected error: #{e.message}"]
@@ -139,6 +131,16 @@ class JwtService
         jti: SecureRandom.hex,
         iat: Time.now.to_i
       }
+    end
+
+    def jwt_exceptions
+      [
+        JWT::ExpiredSignature,
+        JWT::InvalidIssuerError,
+        JWT::DecodeError,
+        JWT::VerificationError,
+        JWT::InvalidIatError
+      ]
     end
 
     def secret_key

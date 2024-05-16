@@ -62,7 +62,7 @@ class JwtServiceTest < ActiveSupport::TestCase
 
       assert_not success, "Decoding should fail for an expired token"
       assert_nil payload, "Payload should be nil for an expired token"
-      assert_equal 'Token has expired', error, "Error should indicate that the token has expired"
+      assert_equal 'Signature has expired', error, "Error should indicate that the token has expired"
     end
 
     test "decode handles JWT verification errors" do
