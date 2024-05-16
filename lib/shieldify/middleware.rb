@@ -7,7 +7,7 @@ module Shieldify
     end
 
     def call(env)
-      env['warden'].authenticate!
+      env['warden'].authenticate!(:email, :jwt)
 
       status, headers, response = app.call(env)
       headers = headers_with_token(env, headers)

@@ -14,12 +14,13 @@ module Shieldify
     initializer 'shieldify.configure_warden' do |app|
       app.middleware.use Warden::Manager do |manager|
         manager.strategies.add(:email, Warden::Strategies::Email)
+        manager.strategies.add(:jwt, Warden::Strategies::Jwt)
+
+        manager.default_strategies :email, :jwt
 
         manager.default_strategies :email
         manager.scope_defaults :default, store: false
-        manager.failure_app = lambda do |env|
-          [401, { 'Content-Type' => 'application/json' }, [{ error: 'Unauthorized' }.to_json]]
-        end
+        manager.failure_app = ->(env) { FailureApp.call(env) }
       end
     end
 
