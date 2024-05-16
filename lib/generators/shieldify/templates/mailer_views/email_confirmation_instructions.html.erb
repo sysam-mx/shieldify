@@ -1,4 +1,7 @@
-<h1><%= t('shieldify.mailer.confirmation_instructions.greeting', name: @user.email) %></h1>
-<p><%= t('shieldify.mailer.confirmation_instructions.thanks') %></p>
-<p><%= link_to t('shieldify.mailer.confirmation_instructions.confirm_account'), user_email_confirmation_url(@token) %></p>
-<p><%= t('shieldify.mailer.confirmation_instructions.ignore') %></p>
+<h1><%= t('shieldify.mailer.email_confirmation_instructions.greeting', email: @user.unconfirmed_email) %></h1>
+
+<p><%= t('shieldify.mailer.email_confirmation_instructions.thanks') %></p>
+
+<p><%= link_to t('shieldify.mailer.email_confirmation_instructions.confirm_account'), users_email_confirmation_url(token: @token) %></p>
+
+<p><%= t('shieldify.mailer.email_confirmation_instructions.ignore') %></p>
