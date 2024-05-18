@@ -1,6 +1,6 @@
 require 'warden'
 
-module Warden
+module Shieldify
   module Strategies
     class Jwt < Warden::Strategies::Base
       def valid?

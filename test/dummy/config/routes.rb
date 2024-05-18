@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   post '/shfy/login', to: 'sessions#create'
+  get '/warden-no-authenticated-index', to: 'sessions#index'
+  get '/warden-authenticated-show', to: 'sessions#show'
 end

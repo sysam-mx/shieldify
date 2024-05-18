@@ -1,10 +1,10 @@
 require 'warden'
 
-module Warden
+module Shieldify
   module Strategies
     class Email < Warden::Strategies::Base
       def valid?        
-        request.path.include?("shfy/login") && params['email'] && params['password']
+        params['email'] && params['password']
       end
 
       def authenticate!

@@ -1,11 +1,5 @@
 require "shieldify/version"
 require "shieldify/railtie"
-require "shieldify/failure_app"
-require "shieldify/model_extensions"
-require "shieldify/controllers/helpers"
-require "shieldify/strategies/email"
-require "shieldify/strategies/jwt"
-require "shieldify/middleware"
 
 module Shieldify
   class Configuration
