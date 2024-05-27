@@ -39,10 +39,6 @@ module Shieldify
     mattr_accessor :maximum_attempts
     @@maximum_attempts = 20
 
-    # The parent controller for the internal controllers.
-    # mattr_accessor :parent_controller
-    # @@parent_controller = "ApplicationController"
-
     # The parent mailer for internal mailers.
     mattr_accessor :parent_mailer
     @@parent_mailer = "ActionMailer::Base"
@@ -55,7 +51,7 @@ module Shieldify
     @@jwt_issuer = "Shieldify"
 
     mattr_accessor :jwt_exp
-    @@jwt_exp = 24
+    @@jwt_exp = 24.hours.from_now.to_i
   end
 
   def self.setup

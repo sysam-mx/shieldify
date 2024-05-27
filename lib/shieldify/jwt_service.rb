@@ -125,7 +125,7 @@ class JwtService
     def jwt_payload(user_id)
       {
         sub: user_id,
-        exp: jwt_exp.hours.from_now.to_i,
+        exp: jwt_exp,
         nbf: Time.now.to_i,
         iss: issuer,
         jti: SecureRandom.hex,
