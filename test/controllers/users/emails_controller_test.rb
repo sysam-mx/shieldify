@@ -13,7 +13,7 @@ module Users
       assert_response :ok
 
       json_response = JSON.parse(response.body)
-      assert_equal 'Email confirmado exitosamente. Ahora puedes iniciar sesión.', json_response['message']
+      assert_equal 'Email successfully confirmed', json_response['message']
 
       @user.reload
       assert @user.email.present?

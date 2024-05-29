@@ -64,7 +64,7 @@ module Shieldify
                 assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
                 assert_includes(
                   user.errors[:password],
-                  "debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+                  I18n.t("shieldify.models.email_authenticatable.registerable.password_complexity.format")
                 )
               end
             end
@@ -185,7 +185,10 @@ module Shieldify
 
               assert user.errors.present?
               assert_not_empty user.errors[:current_password]
-              assert_includes user.errors[:current_password], "is invalid"
+              assert_includes(
+                user.errors[:current_password],
+                I18n.t("shieldify.models.email_authenticatable.registerable.password.errors.invalid")
+              )
             end
           end
 
@@ -211,7 +214,10 @@ module Shieldify
               assert user.errors.present?
               assert_not_empty user.errors[:password]
               assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
-              assert_includes user.errors[:password], "debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+              assert_includes(
+                user.errors[:password],
+                I18n.t("shieldify.models.email_authenticatable.registerable.password_complexity.format")
+              )
             end
           end
 

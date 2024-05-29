@@ -1,7 +1,17 @@
 en:
   shieldify:
+    controllers:
+      emails:
+        confirmation:
+          success_messages: "Email successfully confirmed"
     models:
       email_authenticatable:
+        registerable:
+          password:
+            errors:
+              invalid: "invalid"
+          password_complexity:
+            format: It must include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)
         confirmable:
           email_confirmation_token:
             errors:
