@@ -48,7 +48,7 @@ en:
         subject: "Email Updated"
         title: "Email Updated"
         greeting: "Hello %{email},"
-        message: "We're sending this email to notify you that your email address has been successfully updated."
+        message: "We received a request to change the email address associated with your account to %{unconfirmed_email}."
         ignore: "If you did not make this change, please contact support immediately."
       password_changed:
         subject: "Password Updated"

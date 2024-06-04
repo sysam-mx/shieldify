@@ -1,5 +1,5 @@
 <%= t('shieldify.mailer.email_changed.greeting', email: @user.email) %>
 
-<%= t('shieldify.mailer.email_changed.message') %>
+<%= t('shieldify.mailer.email_changed.message', unconfirmed_email: @user.unconfirmed_email) %>
 
 <%= t('shieldify.mailer.email_changed.ignore') %>

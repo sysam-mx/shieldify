@@ -38,7 +38,7 @@ es:
         subject: "Correo Electrónico Actualizado"
         title: "Correo Electrónico Actualizado"
         greeting: "Hola %{email},"
-        message: "Estamos enviándote este correo para notificarte que tu dirección de correo electrónico ha sido actualizada exitosamente."
+        message: "Recibimos una solicitud para cambiar la dirección de correo electrónico asociada a tu cuenta a %{unconfirmed_email}."
         ignore: "Si no hiciste este cambio, por favor contacta a soporte inmediatamente."
       password_changed:
         subject: "Contraseña Actualizada"
