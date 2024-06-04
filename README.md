@@ -120,7 +120,7 @@ The authentication using email and password, work as follow.
 render json: { message: 'Authenticated successfully', user: current_user }
 ```
 
-### Usage Example
+#### Usage Example
 
 1. **Add the Route**:
 
