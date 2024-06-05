@@ -198,3 +198,60 @@ Authentication using JSON Web Tokens (JWT) in this plugin ensures secure and sta
   ```
 
 With this setup, you can authenticate requests using JWTs, ensuring secure and stateless authentication in your Rails application.
+
+Tu documentación se ve excelente. Aquí está con algunas pequeñas correcciones para mejorar la claridad y el formato:
+
+## Controller Helpers
+
+The `Shieldify::Controllers::Helpers` module, which is already included in `ActionController::API`, provides several helper methods to manage user authentication within your controllers. Below is a detailed explanation of each method and how to use them:
+
+- **current_user**
+
+  This method returns the currently authenticated user based on the Warden strategy.
+
+  **Usage Example:**
+  ```ruby
+  # app/controllers/user_controller.rb
+  class UserController < ApplicationController
+    def index
+      user = current_user
+      render json: { user: user }
+    end
+  end
+  ```
+
+- **user_signed_in?**
+
+  This method checks if a user is currently signed in. It returns `true` if a user is signed in, otherwise `false`.
+
+  **Usage Example:**
+  ```ruby
+  # app/controllers/home_controller.rb
+  class HomeController < ApplicationController
+    def index
+      if user_signed_in?
+        render json: { message: 'User is signed in' }
+      else
+        render json: { message: 'User is not signed in' }
+      end
+    end
+  end
+  ```
+
+- **authenticate_user!**
+
+  This method ensures that a user is authenticated before accessing certain actions. If the user is not signed in, it responds with an unauthorized status.
+
+  **Usage Example:**
+  ```ruby
+  # app/controllers/protected_controller.rb
+  class ProtectedController < ApplicationController
+    before_action :authenticate_user!
+
+    def index
+      render json: { message: 'You have accessed a protected resource' }
+    end
+  end
+  ```
+
+With these helper methods, you can easily manage user authentication and access control in your Rails application.
