@@ -1,5 +1,7 @@
 # Shieldify
 
+![Gem Version](https://img.shields.io/gem/v/shieldify.svg)
+
 Shieldify is a Ruby on Rails user authentication plugin. It handles authentication through email and API authentication via JWT (JSON Web Tokens). The gem includes functionalities for user registration, email confirmation, and user authentication via email/password and JWT.
 
 ## Features
@@ -271,9 +273,7 @@ The `Shieldify::Models::EmailAuthenticatable` module provides email and password
   # app/models/user.rb
   class User < ApplicationRecord
     include Shieldify::Models::EmailAuthenticatable
-
     # or
-
     shieldify email_authenticatable: %i[]
   end
   ```
