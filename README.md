@@ -1,6 +1,6 @@
 # Shieldify
 
-Shieldify is a Ruby on Rails user authentication plugin. It handles authentication through email and API authentication via JWT (JSON Web Tokens). The gem includes functionalities for user registration, email confirmation, and user authentication via email and password.
+Shieldify is a Ruby on Rails user authentication plugin. It handles authentication through email and API authentication via JWT (JSON Web Tokens). The gem includes functionalities for user registration, email confirmation, and user authentication via email/password and JWT.
 
 ## Features
 
@@ -155,3 +155,46 @@ Authentication using email and password in this plugin provides a robust and sec
   ```
 
 With this setup, you can authenticate users using email and password, generate a JWT, and handle the response logic in your sessions controller or any controller.
+
+#### JSON Web Token (JWT)
+
+Authentication using JSON Web Tokens (JWT) in this plugin ensures secure and stateless user sessions. This method leverages middleware and Warden strategies to handle authentication requests seamlessly. Below is a detailed overview of how this process works:
+
+- **Middleware and Warden Strategy**:
+  Authentication is processed through middleware that intercepts requests containing a JWT in the `Authorization` header. If a valid JWT is present, the Warden strategy is used to authenticate the user.
+
+  - **Shieldify Middleware**:
+    The middleware intercepts requests to handle authentication based on the presence of the `Authorization` header.
+
+  - **Warden JWT Strategy**:
+    The Warden strategy extracts the JWT from the `Authorization` header, validates it, and authenticates the user if the token is valid.
+
+- **Protected Request**:
+  You can protect specific actions in your controllers by using a `before_action` filter that ensures the user is authenticated.
+
+  ```ruby
+  before_action :authenticate_user!
+  ```
+
+##### Usage Example
+
+1. **Protect Controller Action**:
+
+  ```ruby
+  # app/controllers/protected_controller.rb
+  class ProtectedController < ApplicationController
+    before_action :authenticate_user!
+
+    def index
+      render json: { message: 'You have accessed a protected resource' }
+    end
+  end
+  ```
+
+2. **Example Request using curl**:
+
+  ```sh
+  curl -X GET http://localhost:3000/protected_resource -H "Authorization: Bearer <your_jwt_token>"
+  ```
+
+With this setup, you can authenticate requests using JWTs, ensuring secure and stateless authentication in your Rails application.
