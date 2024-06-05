@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.version     = Shieldify::VERSION
   spec.authors     = ["Armando Alejandre"]
   spec.email       = ["armando1339@gmail.com"]
-  spec.homepage    = "https://rubygems.org/"
+  spec.homepage    = "https://github.com/sysam-mx/shieldify"
   spec.summary     = "Authentication solution for Rails APIs."
   spec.description = "Authentication solution for Rails APIs."
   spec.license     = "MIT"
@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.metadata["allowed_push_host"] = "https://rubygems.org/"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://rubygems.org/"
-  spec.metadata["changelog_uri"] = "https://rubygems.org/"
+  spec.metadata["source_code_uri"] = "https://github.com/sysam-mx/shieldify"
+  spec.metadata["changelog_uri"] = "https://github.com/sysam-mx/shieldify/blob/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
