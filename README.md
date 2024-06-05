@@ -255,3 +255,121 @@ The `Shieldify::Controllers::Helpers` module, which is already included in `Acti
   ```
 
 With these helper methods, you can easily manage user authentication and access control in your Rails application.
+
+## Model Extensions
+
+### Email Authenticatable
+
+The `Shieldify::Models::EmailAuthenticatable` module provides email and password authentication functionality for users. It includes methods to authenticate users by their email and password, and uses `has_secure_password` for secure password handling.
+
+- **Email and Password Authentication**:
+  - Adds methods to set and authenticate against a BCrypt password.
+  - Requires a `password_digest` attribute.
+
+  **Usage Example**:
+  ```ruby
+  # app/models/user.rb
+  class User < ApplicationRecord
+    include Shieldify::Models::EmailAuthenticatable
+
+    # or
+
+    shieldify email_authenticatable: %i[]
+  end
+  ```
+
+  **Authenticate by Email**:
+  ```ruby
+  # Authenticate a user by email and password
+  user = User.authenticate_by_email(email: 'user@example.com', password: 'password')
+  if user.errors.any?
+    # Handle authentication failure
+  else
+    # Handle authentication success
+  end
+  ```
+
+#### Confirmable
+
+The `Shieldify::Models::EmailAuthenticatable::Confirmable` module implements email confirmation using tokens. It generates confirmation tokens when registering or changing a user's email address, enabling confirmation through a secure process. It includes functionality to automatically send confirmation instructions and manage email confirmations.
+
+- **Email Confirmation**:
+  - Generates confirmation tokens for email confirmation.
+  - Sends email confirmation instructions.
+  - Manages email confirmations and checks token expiration.
+
+  **Usage Example**:
+  ```ruby
+  # app/models/user.rb
+  class User < ApplicationRecord
+    include Shieldify::Models::EmailAuthenticatable::Confirmable
+    # or
+    shieldify email_authenticatable: %i[confirmable]
+  end
+  ```
+
+  **Confirm Email by Token**:
+  ```ruby
+  # Confirm a user's email by token
+  user = User.confirm_email_by_token('confirmation_token')
+  if user.errors.any?
+    # Handle confirmation failure
+  else
+    # Handle confirmation success
+  end
+  ```
+
+#### Registerable
+
+The `Shieldify::Models::EmailAuthenticatable::Registerable` module provides registration functionality for users, including email normalization, validation of email and password, and methods for registering a user and updating their email and password.
+
+- **User Registration**:
+  - Normalizes email before validation.
+  - Validates email format, uniqueness, and presence.
+  - Validates password complexity and minimum length.
+  - Provides methods to register a new user, update password, and update email.
+
+  **Usage Example**:
+  ```ruby
+  # app/models/user.rb
+  class User < ApplicationRecord
+    include Shieldify::Models::EmailAuthenticatable::Registerable
+    # or
+    shieldify email_authenticatable: %i[registerable]
+  end
+  ```
+
+  **Register a New User**:
+  ```ruby
+  # Register a new user
+  user = User.register(email: 'newuser@example.com', password: 'password', password_confirmation: 'password')
+  if user.errors.any?
+    # Handle registration failure
+  else
+    # Handle registration success
+  end
+  ```
+
+  **Update Password**:
+  ```ruby
+  # Update user's password
+  user.update_password(current_password: 'current_password', new_password: 'new_password', password_confirmation: 'new_password')
+  if user.errors.any?
+    # Handle password update failure
+  else
+    # Handle password update success
+  end
+  ```
+
+  **Update Email**:
+  ```ruby
+  # Update user's email
+  user.update_email(current_password: 'current_password', new_email: 'newemail@example.com')
+  if user.errors.any?
+    # Handle email update failure
+  else
+    # Handle email update success
+  end
+  ```
+
+With these modules, you can easily manage user authentication, email confirmation, and registration within your Rails application.
