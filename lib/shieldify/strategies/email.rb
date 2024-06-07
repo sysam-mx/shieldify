@@ -4,7 +4,7 @@ module Shieldify
   module Strategies
     class Email < Warden::Strategies::Base
       def valid?        
-        params['email'] && params['password']
+        request.params['email'].present? && request.params['password'].present?
       end
 
       def authenticate!
