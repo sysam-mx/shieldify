@@ -1,20 +1,23 @@
-require 'warden'
-
 module Shieldify
   module Strategies
     class Email < Warden::Strategies::Base
-      def valid?        
-        request.params['email'].present? && request.params['password'].present?
+      def valid?
+        json_body['email'].present? && json_body['password'].present?
       end
 
       def authenticate!
-        user = User.authenticate_by_email(email: request.params['email'], password: request.params['password'])
+        user = User.authenticate_by_email(email: json_body['email'], password: json_body['password'])
         return fail!("Unauthorized: #{user.errors.full_messages.join(", ")}") unless user.errors.empty?
 
         handle_user_authentication(user)
       end
 
       private
+
+      def json_body
+        request.body.rewind
+        JSON.parse(request.body.read) rescue {}
+      end
 
       def handle_user_authentication(user)
         JwtService.encode(user.id) do |success, token, jti, error|

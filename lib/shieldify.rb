@@ -1,3 +1,11 @@
+require "warden"
+require "shieldify/failure_app"
+require "shieldify/model_extensions"
+require "shieldify/controllers/helpers"
+require "shieldify/strategies/email"
+require "shieldify/strategies/jwt"
+require "shieldify/middleware/authentication"
+require "shieldify/middleware"
 require "shieldify/version"
 require "shieldify/railtie"
 
@@ -62,4 +70,5 @@ end
 require "shieldify/models/email_authenticatable"
 require "shieldify/models/email_authenticatable/registerable"
 require "shieldify/models/email_authenticatable/confirmable"
+require "shieldify/jwt_service"
 require "shieldify/mailer"

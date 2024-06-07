@@ -1,5 +1,3 @@
-require 'warden'
-
 module Shieldify
   module Strategies
     class Jwt < Warden::Strategies::Base

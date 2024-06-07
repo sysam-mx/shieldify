@@ -1,12 +1,3 @@
-require "warden"
-require "shieldify/failure_app"
-require "shieldify/model_extensions"
-require "shieldify/controllers/helpers"
-require "shieldify/strategies/email"
-require "shieldify/strategies/jwt"
-require "shieldify/middleware/authentication"
-require "shieldify/middleware"
-
 module Shieldify
   class Railtie < ::Rails::Railtie
     initializer 'shieldify.add_routes' do |app|

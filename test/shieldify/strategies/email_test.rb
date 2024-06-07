@@ -14,7 +14,7 @@ class EmailTest < ActionDispatch::IntegrationTest
   end
 
   test "successful login" do
-    post '/shfy/login', params: { email: @user.email, password: @user.password }
+    post '/shfy/login', params: { email: @user.email, password: @user.password }, as: :json
     
     assert_response :success
     assert_not_nil response.headers['Authorization'], "Authorization header should not be nil"
@@ -22,7 +22,7 @@ class EmailTest < ActionDispatch::IntegrationTest
   end
 
   test "unsuccessful login" do
-    post '/shfy/login', params: { email: @user.email, password: 'wrongpassword' }
+    post '/shfy/login', params: { email: @user.email, password: 'wrongpassword' }, as: :json
     assert_response :unauthorized
   end
 end
