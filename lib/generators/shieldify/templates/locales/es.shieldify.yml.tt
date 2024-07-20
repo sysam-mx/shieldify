@@ -19,7 +19,7 @@ es:
         thanks: "Por favor confirma tu email haciendo clic en el siguiente enlace:"
         confirm_account: "Confirmar email"
         ignore: "Si no has solicitado esta confirmación, por favor ignora este correo."
-      reset_password_instructions:
+      reset_email_password_instructions:
         subject: "Instrucciones para Restablecer Contraseña"
         title: "Instrucciones para Restablecer Contraseña"
         greeting: "Hola %{email},"
