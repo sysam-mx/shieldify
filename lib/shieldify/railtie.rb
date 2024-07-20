@@ -3,9 +3,8 @@ module Shieldify
     initializer 'shieldify.add_routes' do |app|
       app.routes.prepend do
         get 'shfy/users/email/:token/confirm', to: 'users/emails#show', as: :users_email_confirmation
-        # post 'shfy/users/email/reset_password', to: 'users/emails/reset_passwords#create'
-        # put 'shfy/users/email/:token/reset_password', to: 'users/emails/reset_passwords#update'
-        # get 'shfy/users/access/:token/unlock', to: 'users/access#show'
+        post 'shfy/users/email/request_password_recovery', to: 'users/emails/reset_passwords#create', as: :users_request_password_recovery
+        put 'shfy/users/email/reset_password', to: 'users/emails/reset_passwords#update', as: :users_reset_password
       end
     end
 
@@ -29,6 +28,7 @@ module Shieldify
     initializer 'shieldify.require' do
       require_relative '../../app/models/jwt_session'
       require_relative '../../app/controllers/users/emails_controller'
+      require_relative '../../app/controllers/users/emails/reset_passwords_controller'
     end
 
     initializer 'shieldify.active_record' do

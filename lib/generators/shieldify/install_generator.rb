@@ -36,7 +36,7 @@ module Shieldify
 
     def model_contents
       <<-CONTENT
-  shieldify email_authenticatable: %i[registerable confirmable]
+  shieldify email_authenticatable: %i[registerable confirmable password_recoverable]
 CONTENT
     end
 

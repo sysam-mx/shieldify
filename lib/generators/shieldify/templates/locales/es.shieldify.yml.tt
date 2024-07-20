@@ -1,16 +1,16 @@
 es:
   shieldify:
-    models:
-      email_authenticatable:
-        confirmable:
-          email_confirmation_token:
-            errors:
-              invalid: "inválido"
-              expired: "ha expirado"
-          unconfirmed_email:
-            errors:
-              not_found: "no encontrado"
-          email_confirmation_token_generated_at:
+    controllers:
+      emails:
+        confirmation:
+          success_messages: "Correo electrónico confirmado con éxito"
+      reset_passwords:
+        create:
+          success: "Se han enviado las instrucciones para restablecer la contraseña a tu correo electrónico."
+          failure: "Correo electrónico no encontrado."
+        update:
+          success: "La contraseña se ha restablecido con éxito."
+          failure: "El restablecimiento de la contraseña falló. Por favor, inténtalo de nuevo."
     mailer:
       email_confirmation_instructions:
         subject: "Instrucciones de Confirmación de Email"

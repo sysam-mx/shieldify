@@ -4,6 +4,13 @@ en:
       emails:
         confirmation:
           success_messages: "Email successfully confirmed"
+      reset_passwords:
+        create:
+          success: "Reset password instructions have been sent to your email."
+          failure: "Email not found."
+        update:
+          success: "Password has been reset successfully."
+          failure: "Password reset failed. Please try again."
     models:
       email_authenticatable:
         registerable:

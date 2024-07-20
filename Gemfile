@@ -8,6 +8,8 @@ gem "puma"
 
 gem "sqlite3"
 
+gem "letter_opener", group: :development
+
 group :development, :test do
   # Start debugger with binding.b [https://github.com/ruby/debug]
   gem "debug", ">= 1.0.0"

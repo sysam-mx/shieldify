@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_09_030907) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_180859) do
   create_table "jwt_sessions", force: :cascade do |t|
     t.string "jti", null: false
     t.integer "user_id", null: false
@@ -26,9 +26,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_09_030907) do
     t.string "unconfirmed_email"
     t.string "email_confirmation_token"
     t.string "email_confirmation_token_generated_at"
+    t.string "reset_email_password_token"
+    t.string "reset_email_password_token_generated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "jwt_sessions", "users"

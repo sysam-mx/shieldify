@@ -12,6 +12,10 @@ class ShieldifyCreateUsers < ActiveRecord::Migration<%= migration_version %>
       t.string :email_confirmation_token
       t.string :email_confirmation_token_generated_at
 
+      ## Email password recoverable
+      t.string :reset_email_password_token
+      t.string :reset_email_password_token_generated_at
+
       t.timestamps null: false
     end
 
@@ -22,7 +26,7 @@ class ShieldifyCreateUsers < ActiveRecord::Migration<%= migration_version %>
       t.timestamps
     end
 
-    add_index :users, :email, unique: true
+    add_index :users, :email
     add_index :jwt_sessions, :jti, unique: true
   end
 end

@@ -5,13 +5,14 @@ module Users
       user = User.confirm_email_by_token(token)
 
       if user.errors.blank?
-        render(
-          json: { message: I18n.t("shieldify.controllers.emails.confirmation.success_messages") },
-          status: :ok
-        )
+        response.headers['X-Email-Confirmation-Message'] = I18n.t("shieldify.controllers.emails.confirmation.success_messages")
+        response.headers['X-Email-Confirmation-Status'] = 'success'
       else
-        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+        response.headers['X-Email-Confirmation-Message'] = user.errors.full_messages.last
+        response.headers['X-Email-Confirmation-Status'] = 'error'
       end
+
+      redirect_to(Shieldify::Configuration.before_confirmation_url, allow_other_host: true)
     end
   end
 end

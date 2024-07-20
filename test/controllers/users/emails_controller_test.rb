@@ -10,10 +10,11 @@ module Users
 
     test 'successful email confirmation' do
       get users_email_confirmation_path(token: @token)
-      assert_response :ok
+      assert_response :redirect
+      assert_redirected_to Shieldify::Configuration.before_confirmation_url
 
-      json_response = JSON.parse(response.body)
-      assert_equal 'Email successfully confirmed', json_response['message']
+      assert_equal 'Email successfully confirmed', response.headers['X-Email-Confirmation-Message']
+      assert_equal 'success', response.headers['X-Email-Confirmation-Status']
 
       @user.reload
       assert @user.email.present?
@@ -25,10 +26,11 @@ module Users
     test 'unsuccessful email confirmation with invalid token' do
       invalid_token = 'invalidtoken'
       get users_email_confirmation_path(token: invalid_token)
-      assert_response :unprocessable_entity
+      assert_response :redirect
+      assert_redirected_to Shieldify::Configuration.before_confirmation_url
 
-      json_response = JSON.parse(response.body)
-      assert_includes json_response['errors'], 'Email confirmation token invalid'
+      assert_equal 'Email confirmation token invalid', response.headers['X-Email-Confirmation-Message']
+      assert_equal 'error', response.headers['X-Email-Confirmation-Status']
 
       @user.reload
       assert_empty @user.email
