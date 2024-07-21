@@ -30,6 +30,7 @@ module Shieldify
 
     def copy_locale_file
       template "locales/en.shieldify.yml", File.join("config", "locales", "en.shieldify.yml")
+      template "locales/es.shieldify.yml", File.join("config", "locales", "es.shieldify.yml")
     end
 
     private

@@ -8,11 +8,11 @@ module Users
         if user
           user.send_reset_email_password_instructions
 
-          response.headers['X-Password-Reset-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.create.success")
-          response.headers['X-Password-Reset-Status'] = 'success'
+          response.headers['X-Shfy-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.create.success")
+          response.headers['X-Shfy-Status'] = 'success'
         else
-          response.headers['X-Password-Reset-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.create.failure")
-          response.headers['X-Password-Reset-Status'] = 'error'
+          response.headers['X-Shfy-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.create.failure")
+          response.headers['X-Shfy-Status'] = 'error'
         end
 
         redirect_to(Shieldify::Configuration.after_request_reset_password_url, allow_other_host: true)
@@ -24,15 +24,15 @@ module Users
         
         if user
           if user.reset_password(new_password: params[:password], new_password_confirmation: params[:password_confirmation])
-            response.headers['X-Password-Reset-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.update.success")
-            response.headers['X-Password-Reset-Status'] = 'success'
+            response.headers['X-Shfy-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.update.success")
+            response.headers['X-Shfy-Status'] = 'success'
           else
-            response.headers['X-Password-Reset-Message'] = user.errors.full_messages.last
-            response.headers['X-Password-Reset-Status'] = 'error'
+            response.headers['X-Shfy-Message'] = user.errors.full_messages.last
+            response.headers['X-Shfy-Status'] = 'error'
           end
         else
-          response.headers['X-Password-Reset-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.update.failure")
-          response.headers['X-Password-Reset-Status'] = 'error'
+          response.headers['X-Shfy-Message'] = I18n.t("shieldify.controllers.emails.reset_passwords.update.failure")
+          response.headers['X-Shfy-Status'] = 'error'
         end
 
         redirect_to(Shieldify::Configuration.after_reset_password_url, allow_other_host: true)
