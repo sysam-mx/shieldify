@@ -18,8 +18,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_request_reset_password_url
 
-        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.create.success"), response.headers['X-Password-Reset-Message']
-        assert_equal 'success', response.headers['X-Password-Reset-Status']
+        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.create.success"), cookies['shfy_message']
+        assert_equal 'success', cookies['shfy_status']
       end
 
       test 'unsuccessful password reset request with invalid email' do
@@ -27,8 +27,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_request_reset_password_url
 
-        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.create.failure"), response.headers['X-Password-Reset-Message']
-        assert_equal 'error', response.headers['X-Password-Reset-Status']
+        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.create.failure"), cookies['shfy_message']
+        assert_equal 'error', cookies['shfy_status']
       end
 
       test 'successful password reset' do
@@ -41,8 +41,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_reset_password_url
 
-        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.success"), response.headers['X-Password-Reset-Message']
-        assert_equal 'success', response.headers['X-Password-Reset-Status']
+        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.success"), cookies['shfy_message']
+        assert_equal 'success', cookies['shfy_status']
 
         @user.reload
         assert @user.authenticate('P@$$word10')
@@ -57,8 +57,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_reset_password_url
 
-        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.failure"), response.headers['X-Password-Reset-Message']
-        assert_equal 'error', response.headers['X-Password-Reset-Status']
+        assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.failure"), cookies['shfy_message']
+        assert_equal 'error', cookies['shfy_status']
 
         @user.reload
         assert_not @user.authenticate('newpassword')
@@ -73,8 +73,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_reset_password_url
 
-        assert_match /Password confirmation doesn't match/, response.headers['X-Password-Reset-Message']
-        assert_equal 'error', response.headers['X-Password-Reset-Status']
+        assert_match /Password confirmation doesn't match/, cookies['shfy_message']
+        assert_equal 'error', cookies['shfy_status']
 
         @user.reload
         assert_not @user.authenticate('newpassword')
@@ -89,8 +89,8 @@ module Users
         assert_response :redirect
         assert_redirected_to Shieldify::Configuration.after_reset_password_url
 
-        assert_match /Password is too short/, response.headers['X-Password-Reset-Message']
-        assert_equal 'error', response.headers['X-Password-Reset-Status']
+        assert_match /Password is too short/, cookies['shfy_message']
+        assert_equal 'error', cookies['shfy_status']
 
         @user.reload
         assert_not @user.authenticate('short')

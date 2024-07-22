@@ -13,8 +13,8 @@ module Users
       assert_response :redirect
       assert_redirected_to Shieldify::Configuration.before_confirmation_url
 
-      assert_equal 'Email successfully confirmed', response.headers['X-Email-Confirmation-Message']
-      assert_equal 'success', response.headers['X-Email-Confirmation-Status']
+      assert_equal 'Email successfully confirmed', cookies['shfy_message']
+      assert_equal 'success', cookies['shfy_status']
 
       @user.reload
       assert @user.email.present?
@@ -29,8 +29,8 @@ module Users
       assert_response :redirect
       assert_redirected_to Shieldify::Configuration.before_confirmation_url
 
-      assert_equal 'Email confirmation token invalid', response.headers['X-Email-Confirmation-Message']
-      assert_equal 'error', response.headers['X-Email-Confirmation-Status']
+      assert_equal 'Email confirmation token invalid', cookies['shfy_message']
+      assert_equal 'error', cookies['shfy_status']
 
       @user.reload
       assert_empty @user.email
