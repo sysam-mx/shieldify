@@ -40,7 +40,7 @@ module Users
       private
 
       def set_cookie(name, value)
-        response.set_cookie(name, { value: value, expires: 1.hour.from_now })
+        response.set_cookie(name, { value: value, expires: 1.hour.from_now, path: '/' })
       end
     end
   end
