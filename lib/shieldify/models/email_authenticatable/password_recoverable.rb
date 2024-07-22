@@ -42,11 +42,11 @@ module Shieldify
               clear_reset_email_password_token
               save
             else
-              errors.add(:password_confirmation, "doesn't match Password")
+              errors.add(:password_confirmation, :password_not_match)
               false
             end
           else
-            errors.add(:reset_email_password_token, "is invalid or has expired")
+            errors.add(:reset_email_password_token, :invalid_or_expired)
             false
           end
         end

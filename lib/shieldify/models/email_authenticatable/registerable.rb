@@ -55,13 +55,10 @@ module Shieldify
         def update_password(current_password:, new_password:, password_confirmation:)
           if authenticate(current_password)
             if update(password: new_password, password_confirmation: password_confirmation)
-              send_password_changed_notification if Shieldify::Configuration.send_password_changed_notification
+              send_password_changed_notification if should_send_password_changed_notification?
             end
           else
-            errors.add(
-              :current_password,
-              I18n.t("shieldify.models.email_authenticatable.registerable.password.errors.invalid")
-            )
+            errors.add(:password, :invalid)
           end
         
           self
@@ -75,12 +72,10 @@ module Shieldify
         def update_email(current_password:, new_email:)
           if authenticate(current_password)
             if update(email: new_email)
-              send_email_changed_notification if Shieldify::Configuration.send_email_changed_notification
+              send_email_changed_notification if should_send_email_changed_notification?
             end
           else
-            errors.add(
-              :password,
-              I18n.t("shieldify.models.email_authenticatable.registerable.password.errors.invalid"))
+            errors.add(:password, :invalid)
           end
         
           self
@@ -105,11 +100,16 @@ module Shieldify
           regex = Shieldify::Configuration.password_complexity
 
           unless password.match?(regex)
-            errors.add(
-              :password,
-              I18n.t("shieldify.models.email_authenticatable.registerable.password_complexity.format")
-            )
+            errors.add(:password, :password_complexity)
           end
+        end
+
+        def should_send_password_changed_notification?
+          Shieldify::Configuration.send_password_changed_notification
+        end
+
+        def should_send_email_changed_notification?
+          Shieldify::Configuration.send_email_changed_notification
         end
       end
     end

@@ -1,4 +1,22 @@
 en:
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        unconfirmed_email: "Unconfirmed Email"
+        password: "Password"
+        email_confirmation_token: "Email Confirmation Token"
+        email_confirmation_token_generated_at: "Email Confirmation Token Generated At"
+        reset_email_password_token: "Reset Email Password Token"
+        reset_email_password_token_generated_at: "Reset Email Password Token Generated At"
+    errors:
+      messages:
+        invalid: "is not valid"
+        invalid_or_expired: "is invalid or has expired"
+        password_not_match: "doesn't match Password"
+        password_complexity: "It must include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)"
+        expired: "has expired"
+        not_found: "not found"
   shieldify:
     controllers:
       emails:
@@ -11,23 +29,6 @@ en:
         update:
           success: "Password has been reset successfully."
           failure: "Password reset failed. Please try again."
-    models:
-      email_authenticatable:
-        registerable:
-          password:
-            errors:
-              invalid: "invalid"
-          password_complexity:
-            format: It must include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)
-        confirmable:
-          email_confirmation_token:
-            errors:
-              invalid: "invalid"
-              expired: "has expired"
-          unconfirmed_email:
-            errors:
-              not_found: "not found"
-          email_confirmation_token_generated_at:
     mailer:
       email_confirmation_instructions:
         subject: "Email Confirmation Instructions"

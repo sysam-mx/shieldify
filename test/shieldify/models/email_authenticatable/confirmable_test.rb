@@ -91,7 +91,7 @@ module Shieldify
               assert_not_nil new_user.email_confirmation_token
               assert user.errors.present?
               assert_not_empty user.errors[:email_confirmation_token]
-              assert_includes user.errors[:email_confirmation_token], "invalid"
+              assert_includes user.errors[:email_confirmation_token], "is not valid"
             end
           end
 

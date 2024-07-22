@@ -28,7 +28,7 @@ module Shieldify
 
                 assert user.errors.present?
                 assert_not_empty user.errors[:email]
-                assert_includes user.errors[:email], "is invalid"
+                assert_includes user.errors[:email], "is not valid"
               end
 
               test "should validate email uniqueness in email present" do
@@ -62,10 +62,7 @@ module Shieldify
                 assert user.errors.present?
                 assert_not_empty user.errors[:password]
                 assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
-                assert_includes(
-                  user.errors[:password],
-                  I18n.t("shieldify.models.email_authenticatable.registerable.password_complexity.format")
-                )
+                assert_includes(user.errors[:password], I18n.t("activerecord.errors.messages.password_complexity"))
               end
             end
 
@@ -105,7 +102,7 @@ module Shieldify
 
               assert user.errors.present?
               assert_not_empty user.errors[:email]
-              assert_includes user.errors[:email], "is invalid"
+              assert_includes user.errors[:email], "is not valid"
             end
           end
 
@@ -122,7 +119,7 @@ module Shieldify
 
                 assert user.errors.present?
                 assert_not_empty user.errors[:email]
-                assert_includes user.errors[:email], "is invalid"
+                assert_includes user.errors[:email], "is not valid"
                 assert_not_empty user.errors[:password]
                 assert_includes user.errors[:password], "can't be blank"
               end
@@ -184,11 +181,8 @@ module Shieldify
               )
 
               assert user.errors.present?
-              assert_not_empty user.errors[:current_password]
-              assert_includes(
-                user.errors[:current_password],
-                I18n.t("shieldify.models.email_authenticatable.registerable.password.errors.invalid")
-              )
+              assert_not_empty user.errors[:password]
+              assert_includes(user.errors[:password], "is not valid")
             end
           end
 
@@ -214,10 +208,7 @@ module Shieldify
               assert user.errors.present?
               assert_not_empty user.errors[:password]
               assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
-              assert_includes(
-                user.errors[:password],
-                I18n.t("shieldify.models.email_authenticatable.registerable.password_complexity.format")
-              )
+              assert_includes(user.errors[:password], I18n.t("activerecord.errors.messages.password_complexity"))
             end
           end
 

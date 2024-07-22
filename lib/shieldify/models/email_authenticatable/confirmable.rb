@@ -123,8 +123,7 @@ module Shieldify
             return add_error_to_empty_user(:email_confirmation_token, :invalid) if user.blank?
 
             if user.email_confirmation_token_expired?
-              msg = I18n.t('shieldify.models.email_authenticatable.confirmable.email_confirmation_token.errors.expired')
-              user.errors.add(:email_confirmation_token, msg)
+              user.errors.add(:email_confirmation_token, :expired)
 
               return user
             end
@@ -144,12 +143,7 @@ module Shieldify
 
           def add_error_to_empty_user(param, error)
             user = new
-
-            user.errors.add(
-              param.to_sym,
-              I18n.t("shieldify.models.email_authenticatable.confirmable.#{param.to_sym}.errors.#{error.to_sym}")
-            )
-
+            user.errors.add(param, error)
             user
           end
         end
