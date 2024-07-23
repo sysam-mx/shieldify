@@ -1,23 +1,17 @@
 module Users
   module Emails
-    class ResetPasswordsController < ActionController::Base
-      # Acción para solicitar el restablecimiento de contraseña
+    class ResetPasswordsController < ActionController::API
+      # Action to request a password reset
       def create
         user = User.find_by(email: params[:email])
+        message = I18n.t("shieldify.controllers.emails.reset_passwords.create.success")
 
-        if user
-          user.send_reset_email_password_instructions
-          set_cookie('shfy_message', I18n.t("shieldify.controllers.emails.reset_passwords.create.success"))
-          set_cookie('shfy_status', 'success')
-        else
-          set_cookie('shfy_message', I18n.t("shieldify.controllers.emails.reset_passwords.create.failure"))
-          set_cookie('shfy_status', 'error')
-        end
+        user.send_reset_email_password_instructions if user
 
-        redirect_to(Shieldify::Configuration.after_request_reset_password_url, allow_other_host: true)
+        render json: { message: message }, status: :ok
       end
 
-      # Acción para actualizar la contraseña
+      # Action to update the password
       def update
         user = User.find_by_reset_email_password_token(params[:token])
         
@@ -39,9 +33,11 @@ module Users
 
       private
 
+      # Set a cookie with a specified name and value
       def set_cookie(name, value)
-        response.set_cookie(name, { value: value, expires: 1.hour.from_now, path: '/' })
+        response.set_cookie(name, { value: value, expires: 1.minute.from_now, path: '/' })
       end
     end
   end
 end
+

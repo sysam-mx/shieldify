@@ -29,7 +29,7 @@ module Users
       assert_response :redirect
       assert_redirected_to Shieldify::Configuration.before_confirmation_url
 
-      assert_equal 'Email confirmation token invalid', cookies['shfy_message']
+      assert_equal 'Email Confirmation Token is not valid', cookies['shfy_message']
       assert_equal 'error', cookies['shfy_status']
 
       @user.reload

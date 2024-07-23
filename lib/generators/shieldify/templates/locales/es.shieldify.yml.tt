@@ -25,8 +25,7 @@ es:
           success_messages: "Correo electrónico confirmado con éxito"
       reset_passwords:
         create:
-          success: "Se han enviado las instrucciones para restablecer la contraseña a tu correo electrónico."
-          failure: "Correo electrónico no encontrado."
+          success: "Si el correo electrónico existe, se enviarán las instrucciones para restablecer la contraseña."
         update:
           success: "La contraseña se ha restablecido con éxito."
           failure: "El restablecimiento de la contraseña falló. Por favor, inténtalo de nuevo."

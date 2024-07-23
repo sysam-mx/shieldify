@@ -24,8 +24,7 @@ en:
           success_messages: "Email successfully confirmed"
       reset_passwords:
         create:
-          success: "Reset password instructions have been sent to your email."
-          failure: "Email not found."
+          success: "If the email exists, the reset password instructions will be sent to your email."
         update:
           success: "Password has been reset successfully."
           failure: "Password reset failed. Please try again."
