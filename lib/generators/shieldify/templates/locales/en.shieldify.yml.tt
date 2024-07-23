@@ -22,12 +22,12 @@ en:
       emails:
         confirmation:
           success_messages: "Email successfully confirmed"
-      reset_passwords:
-        create:
-          success: "If the email exists, the reset password instructions will be sent to your email."
-        update:
-          success: "Password has been reset successfully."
-          failure: "Password reset failed. Please try again."
+        reset_passwords:
+          create:
+            success: "If the email exists, the reset password instructions will be sent to your email."
+          update:
+            success: "Password has been reset successfully."
+            failure: "Password reset failed. Please try again."
     mailer:
       email_confirmation_instructions:
         subject: "Email Confirmation Instructions"
