@@ -19,16 +19,6 @@ module Shieldify
     mattr_accessor :reset_password_form_url
     @@reset_password_form_url = "http://localhost:3000/reset-password"
 
-    # This configuration defines the URL to redirect users to after they request an email password reset token.
-    # The URL will be used for redirection whether the request is successful or fails, with appropriate messages sent in the headers.
-    mattr_accessor :after_request_reset_password_url
-    @@after_request_reset_password_url = "http://localhost:3000/request-password-recovery"
-
-    # This configuration defines the URL to redirect users to after they attempt to reset their password.
-    # The URL will be used for redirection whether the reset is successful or fails, with appropriate messages sent in the headers.
-    mattr_accessor :after_reset_password_url
-    @@after_reset_password_url = "http://localhost:3000/login"
-
     # This configuration defines the URL to redirect users to after they have confirmed their email address.
   # This URL is used for redirection following a successful email confirmation.
   # It can be set to any page in your frontend application where users should land after their email has been confirmed.

@@ -17,25 +17,15 @@ module Users
         
         if user
           if user.reset_password(new_password: params[:password], new_password_confirmation: params[:password_confirmation])
-            set_cookie('shfy_message', I18n.t("shieldify.controllers.emails.reset_passwords.update.success"))
-            set_cookie('shfy_status', 'success')
+            message = I18n.t("shieldify.controllers.emails.reset_passwords.update.success")
+            render json: { message: message }, status: :ok
           else
-            set_cookie('shfy_message', user.errors.full_messages.last)
-            set_cookie('shfy_status', 'error')
+            render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
           end
         else
-          set_cookie('shfy_message', I18n.t("shieldify.controllers.emails.reset_passwords.update.failure"))
-          set_cookie('shfy_status', 'error')
+          message = I18n.t("shieldify.controllers.emails.reset_passwords.update.failure")
+          render json: { error: message }, status: :unprocessable_entity
         end
-
-        redirect_to(Shieldify::Configuration.after_reset_password_url, allow_other_host: true)
-      end
-
-      private
-
-      # Set a cookie with a specified name and value
-      def set_cookie(name, value)
-        response.set_cookie(name, { value: value, expires: 1.minute.from_now, path: '/' })
       end
     end
   end

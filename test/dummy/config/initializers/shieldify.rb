@@ -7,14 +7,6 @@ Shieldify.setup do |conf|
   # The URL should point to the password reset form on the frontend application, and it will include the reset token as a query parameter.
   # conf.reset_password_form_url = "http://localhost:3000/reset-password"
 
-  # This configuration defines the URL to redirect users to after they request an email password reset token.
-  # The URL will be used for redirection whether the request is successful or fails, with appropriate messages sent in the headers.
-  # conf.after_request_reset_password_url = "http://localhost:3000/request-password-recovery"
-
-  # This configuration defines the URL to redirect users to after they attempt to reset their password.
-  # The URL will be used for redirection whether the reset is successful or fails, with appropriate messages sent in the headers.
-  # conf.after_reset_password_url = "http://localhost:3000/login"
-
   ## Email Confirmation
 
   # This configuration defines the URL to redirect users to after they have confirmed their email address.

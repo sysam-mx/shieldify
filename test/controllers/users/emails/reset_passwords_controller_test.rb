@@ -35,13 +35,11 @@ module Users
             token: @reset_token,
             password: 'P@$$word10',
             password_confirmation: 'P@$$word10'
-          }
+          }, as: :json
 
-          assert_response :redirect
-          assert_redirected_to Shieldify::Configuration.after_reset_password_url
-
-          assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.success"), cookies['shfy_message']
-          assert_equal 'success', cookies['shfy_status']
+          assert_response :ok
+          response_body = JSON.parse(response.body)
+          assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.success"), response_body['message']
 
           @user.reload
           assert @user.authenticate('P@$$word10')
@@ -52,12 +50,11 @@ module Users
             token: 'invalidtoken',
             password: 'newpassword',
             password_confirmation: 'newpassword'
-          }
-          assert_response :redirect
-          assert_redirected_to Shieldify::Configuration.after_reset_password_url
+          }, as: :json
 
-          assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.failure"), cookies['shfy_message']
-          assert_equal 'error', cookies['shfy_status']
+          assert_response :unprocessable_entity
+          response_body = JSON.parse(response.body)
+          assert_equal I18n.t("shieldify.controllers.emails.reset_passwords.update.failure"), response_body['error']
 
           @user.reload
           assert_not @user.authenticate('newpassword')
@@ -68,12 +65,11 @@ module Users
             token: @reset_token,
             password: 'newpassword',
             password_confirmation: 'differentpassword'
-          }
-          assert_response :redirect
-          assert_redirected_to Shieldify::Configuration.after_reset_password_url
+          }, as: :json
 
-          assert_match /Password confirmation doesn't match/, cookies['shfy_message']
-          assert_equal 'error', cookies['shfy_status']
+          assert_response :unprocessable_entity
+          response_body = JSON.parse(response.body)
+          assert_match /Password confirmation doesn't match/, response_body['errors'].join
 
           @user.reload
           assert_not @user.authenticate('newpassword')
@@ -84,12 +80,11 @@ module Users
             token: @reset_token,
             password: 'short',
             password_confirmation: 'short'
-          }
-          assert_response :redirect
-          assert_redirected_to Shieldify::Configuration.after_reset_password_url
+          }, as: :json
 
-          assert_match /Password is too short/, cookies['shfy_message']
-          assert_equal 'error', cookies['shfy_status']
+          assert_response :unprocessable_entity
+          response_body = JSON.parse(response.body)
+          assert_match /Password is too short/, response_body['errors'].join
 
           @user.reload
           assert_not @user.authenticate('short')
