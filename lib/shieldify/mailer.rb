@@ -5,8 +5,8 @@ module Shieldify
     layout 'layouts/shieldify/mailer'
 
     default(
-      from: Shieldify::Configuration.mailer_sender,
-      reply_to: Shieldify::Configuration.reply_to
+      from: -> { Shieldify::Configuration.mailer_sender },
+      reply_to: -> { Shieldify::Configuration.reply_to }
     )
 
     def base_mailer
