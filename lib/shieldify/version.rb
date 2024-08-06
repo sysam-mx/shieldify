@@ -1,3 +1,3 @@
 module Shieldify
-  VERSION = "0.2.8-alpha"
+  VERSION = "0.2.9-alpha"
 end
